@@ -1,7 +1,7 @@
 import { type RequestHandler } from 'express';
 import * as z from 'zod';
 import { validation } from '../../../shared/middlewares/validation';
-import { deleteByIdClientService } from '../../../shared/services/deleteByIdClientService';
+import { ClientsService } from '../../../shared/services';
 
 const paramsSchema = z.object({
   id: z.string()
@@ -15,7 +15,7 @@ export const deleteByIdValidation = validation({ params: paramsSchema });
 
 export const deleteById: RequestHandler<TParamsProps> = async (req, res) => {
 
-  const client = await deleteByIdClientService(req.params.id);
+  const client = await ClientsService.deleteById(req.params.id);
 
   if (!client) return res.status(400).json({ error: 'invalid id' });
 

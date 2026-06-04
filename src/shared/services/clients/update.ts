@@ -1,4 +1,4 @@
-import { prisma } from '../../database/prisma/prisma';
+import { prisma } from '../../../database/prisma/prisma';
 
 type UpdateClientDTO = Partial<{
   name: string
@@ -6,7 +6,7 @@ type UpdateClientDTO = Partial<{
   email: string
 }>;
 
-export const updateClientService = async (id: string, data: UpdateClientDTO) => {
+export const update = async (id: string, data: UpdateClientDTO) => {
 
   const clientFound = await prisma.client.findUnique({
     where: { id }

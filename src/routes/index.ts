@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ClientsController } from '../controllers';
+import { AuthController, ClientsController } from '../controllers';
 
 const router = Router();
 
@@ -10,5 +10,7 @@ router.get('/clients/:id', ClientsController.getByIdValidation, ClientsControlle
 router.patch('/clients/:id', ClientsController.updateValidation, ClientsController.update);
 router.delete('/clients/:id', ClientsController.deleteByIdValidation, ClientsController.deleteById);
 
+// Auth register && login
+router.post('/auth/register', AuthController.registerValidation, AuthController.register);
 
 export { router };

@@ -1,7 +1,7 @@
 import { type RequestHandler } from 'express';
 import * as z from 'zod';
 import { validation } from '../../../shared/middlewares/validation';
-import { updateClientService } from '../../../shared/services/updateClientService';
+import { ClientsService } from '../../../shared/services';
 
 const paramsSchema = z.object({
   id: z.string()
@@ -31,7 +31,7 @@ export const updateValidation = validation({
 
 export const update: RequestHandler<TParamsProps, unknown, UpdateClientDTO> = async (req, res) => {
 
-  const client = await updateClientService(req.params.id, req.body);
+  const client = await ClientsService.update(req.params.id, req.body);
 
   if (!client) return res.status(400).json({ error: 'invalid id' });
 

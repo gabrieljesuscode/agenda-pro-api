@@ -1,7 +1,7 @@
-import { prisma } from '../../database/prisma/prisma';
+import { prisma } from '../../../database/prisma/prisma';
 
 
-export const deleteByIdClientService = async (id: string) => {
+export const deleteById = async (id: string) => {
   const clientFound = await prisma.client.findUnique({
     where: { id }
   });
