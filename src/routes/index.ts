@@ -12,5 +12,6 @@ router.delete('/clients/:id', ClientsController.deleteByIdValidation, ClientsCon
 
 // Auth register && login
 router.post('/auth/register', AuthController.registerValidation, AuthController.register);
+router.post('/auth/login', AuthController.loginValidation, AuthController.login);
 
 export { router };
