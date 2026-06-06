@@ -15,7 +15,7 @@ export const deleteByIdValidation = validation({ params: paramsSchema });
 
 export const deleteById: RequestHandler<TParamsProps> = async (req, res) => {
 
-  const client = await ClientsService.deleteById(req.params.id);
+  const client = await ClientsService.deleteById(req.params.id, res.locals.userId);
 
   if (!client) return res.status(400).json({ error: 'invalid id' });
 

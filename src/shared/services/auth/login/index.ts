@@ -9,10 +9,10 @@ export interface UserLoginDTO {
   password: string
 };
 
-const generateToken = (email: string) => {
+const generateToken = (id: string) => {
   return jwt.sign(
     {
-      userEmail: email
+      userId: id
     },
     process.env.JWT_SECRET!,
     {
@@ -43,6 +43,6 @@ export const login = async (data: UserLoginDTO) => {
   };
 
   return {
-    token: generateToken(user.email)
+    token: generateToken(user.id)
   };
 };

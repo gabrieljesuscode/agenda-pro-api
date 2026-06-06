@@ -6,8 +6,12 @@ export interface CreateClientDTO {
   phone: string
 }
 
-export const create = async (data: CreateClientDTO) => {
+export const create = async (data: CreateClientDTO, userId: string) => {
+
   return await prisma.client.create({
-    data,
+    data: {
+      ...data,
+      userId: userId
+    },
   });
 };

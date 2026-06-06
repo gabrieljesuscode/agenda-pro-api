@@ -31,7 +31,7 @@ export const updateValidation = validation({
 
 export const update: RequestHandler<TParamsProps, unknown, UpdateClientDTO> = async (req, res) => {
 
-  const client = await ClientsService.update(req.params.id, req.body);
+  const client = await ClientsService.update(req.params.id, req.body, res.locals.id);
 
   if (!client) return res.status(400).json({ error: 'invalid id' });
 

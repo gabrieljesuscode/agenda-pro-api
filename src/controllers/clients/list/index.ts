@@ -15,7 +15,7 @@ export const listValidation = validation({
 
 export const list: RequestHandler = async (_, res) => {
 
-  const clientsList = await ClientsService.list();
+  const clientsList = await ClientsService.list(res.locals.userId);
 
   return res.status(200).json(clientsList);
 };  

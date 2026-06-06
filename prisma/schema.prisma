@@ -18,6 +18,9 @@ model Client {
   email String? @unique
   phone String
 
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -27,6 +30,8 @@ model User {
   name String
   email String @unique
   password String
+
+  clients Client[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

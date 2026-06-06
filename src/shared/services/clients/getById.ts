@@ -1,8 +1,11 @@
 import { prisma } from '../../../database/prisma/prisma';
 
 
-export const getById = async (id: string) => {
+export const getById = async (clientId: string, userId: string) => {
   return await prisma.client.findUnique({
-    where: { id }
+    where: {
+      id: clientId,
+      userId: userId
+    }
   });
 };

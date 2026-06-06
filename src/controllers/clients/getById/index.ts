@@ -15,7 +15,7 @@ export const getByIdValidation = validation({ params: paramsSchema });
 
 export const getById: RequestHandler<TParamsProps> = async (req, res) => {
 
-  const client = await ClientsService.getById(req.params.id);
+  const client = await ClientsService.getById(req.params.id, res.locals.userId);
 
   if (!client) return res.status(400).json({ error: 'invalid id' });
 

@@ -16,8 +16,15 @@ export const createValidation = validation({ body: clientSchema });
 
 
 export const create: RequestHandler = async (req: Request<unknown, unknown, Client>, res) => {
+  try {
 
-  const client = await ClientsService.create(req.body);
+    const client = await ClientsService.create(req.body, res.locals.userId);
 
-  return res.status(201).json(client);
+    return res.status(201).json(client);
+
+  } catch {
+    return res.status(500).json({
+      error: 'Internal error'
+    });
+  }
 };
