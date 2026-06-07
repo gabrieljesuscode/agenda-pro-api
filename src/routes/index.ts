@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AuthController, ClientsController } from '../controllers';
+import { AppointmentsController, AuthController, ClientsController } from '../controllers';
 import { auth } from '../shared/middlewares/auth';
 
 const router = Router();
@@ -14,5 +14,9 @@ router.delete('/clients/:id', auth, ClientsController.deleteByIdValidation, Clie
 // Auth register && login
 router.post('/auth/register', AuthController.registerValidation, AuthController.register);
 router.post('/auth/login', AuthController.loginValidation, AuthController.login);
+
+// Appointments CRUD
+router.post('/appointments', auth, AppointmentsController.createValidation, AppointmentsController.create);
+router.get('/appointments', auth, AppointmentsController.listValidation, AppointmentsController.list);
 
 export { router };
