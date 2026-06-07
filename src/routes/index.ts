@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AppointmentsController, AuthController, ClientsController } from '../controllers';
 import { auth } from '../shared/middlewares/auth';
+import { DashboardController } from '../controllers/dashboard';
 
 const router = Router();
 
@@ -18,5 +19,8 @@ router.post('/auth/login', AuthController.loginValidation, AuthController.login)
 // Appointments CRUD
 router.post('/appointments', auth, AppointmentsController.createValidation, AppointmentsController.create);
 router.get('/appointments', auth, AppointmentsController.listValidation, AppointmentsController.list);
+
+// Dashboard 
+router.get('/dashboard', auth, DashboardController.getSummary);
 
 export { router };
