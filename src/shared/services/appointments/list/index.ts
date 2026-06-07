@@ -8,11 +8,18 @@ export const list = async (userId: string) => {
       userId
     },
     include: {
-      client: true
+      client: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true
+        }
+      }
     },
+
     omit: {
-      clientId: true,
-      userId: true
+      clientId: true
     }
   });
 };
