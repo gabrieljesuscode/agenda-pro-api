@@ -22,5 +22,6 @@ router.get('/appointments', auth, AppointmentsController.listValidation, Appoint
 
 // Dashboard 
 router.get('/dashboard', auth, DashboardController.getSummary);
+router.get('/dashboard/upcoming', auth, DashboardController.upcoming);
 
 export { router };

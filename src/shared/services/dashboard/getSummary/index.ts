@@ -2,44 +2,99 @@ import { prisma } from '../../../../database/prisma/prisma';
 import { AppError } from '../../../../errors/AppError';
 
 
+const appointmentsInterval = async (
+  userId: string,
+  startDay: number,
+  endDay = startDay,
+  month: number | undefined = undefined,
+  year: number | undefined = undefined
+) => {
+
+  // Dia atual
+  const todayDate = new Date();
+
+  year = year !== undefined ? year : todayDate.getFullYear();
+  month = month !== undefined ? month : todayDate.getMonth();
+
+  // Array com agendamentos do mesmo dia  
+  const start = new Date(
+    year,
+    month,
+    startDay,
+    0, 0, 0, 0 // Horário inicial do dia
+  );
+
+  const end = new Date(
+    year,
+    month,
+    endDay,
+    23, 59, 59, 999 // Horário final do dia
+  );
+
+
+  return await prisma.appointment.count({
+    where: {
+      userId,
+      date: {
+        gte: start,
+        lte: end,
+      }
+    }
+  });
+};
+
+
 
 export const getSummary = async (userId: string) => {
   // Procura o user e lança erro se não existir
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
       id: userId
-    },
-    include: {
-      clients: true,
-      appointments: true
     }
   });
 
-  if (!user) throw new AppError('Id inválido', 400);
+  if (!user) throw new AppError('Usuário não encontrado', 404);
 
-  // Constante para comparar datas com o dia atual
-  const today = new Date();
+
+  const totalClients = await prisma.client.count({
+    where: {
+      userId
+    }
+  });
+
+  const totalAppointments = await prisma.appointment.count({
+    where: {
+      userId
+    }
+  });
 
   // Array com agendamentos do mesmo dia  
-  const appointmentsToday = user.appointments.filter((value) => {
-    return new Date(value.date).toDateString() === today.toDateString();
-  });
+  const now = new Date();
 
-  const appointmentsMonth = user.appointments.filter((value) => {
-    const valueDate = new Date(value.date);
+  const appointmentsToday = await appointmentsInterval(
+    userId,
+    now.getDate()
+  );
 
-    const sameMonth = valueDate.getMonth() === today.getMonth();
-    const sameYear = valueDate.getFullYear() === today.getFullYear();
+  const finalDayOfMonth = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    0
+  ).getDate();
 
-    return sameMonth && sameYear;
-  });
+  const appointmentsThisMonth = await appointmentsInterval(
+    userId,
+    1,
+    finalDayOfMonth,
+    now.getMonth() // JS usa meses de 0 a 11
+  );
 
   // Retorna o summary do user 
   return {
-    totalClients: user.clients.length,
-    totalAppointments: user.appointments.length,
-    appointmentsToday: appointmentsToday.length,
-    appointmentsThisMonth: appointmentsMonth.length
+    totalClients,
+    totalAppointments,
+    appointmentsToday,
+    appointmentsThisMonth
   };
   // return {
   //   'totalClients': 12,
