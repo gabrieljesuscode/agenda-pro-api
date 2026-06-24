@@ -9,7 +9,7 @@ AppointmentsRouter.use('/appointments', auth);
 // Appointments CRUD
 AppointmentsRouter.post('/appointments', AppointmentsController.createValidation, AppointmentsController.create);
 AppointmentsRouter.get('/appointments', AppointmentsController.listValidation, AppointmentsController.list);
-AppointmentsRouter.patch('/appointments/:id');
+AppointmentsRouter.patch('/appointments/:id', AppointmentsController.updateValidation, AppointmentsController.update);
 AppointmentsRouter.delete('/appointments/:id', AppointmentsController.deleteByIdValidation, AppointmentsController.deleteById);
 
 export { AppointmentsRouter };
