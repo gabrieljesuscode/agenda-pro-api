@@ -7,6 +7,15 @@ export const swaggerSpec = swaggerJsdoc({
       title: 'AgendaPro API',
       version: '1.0.0',
     },
+    components: {
+      securitySchemas: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        }
+      }
+    }
   },
   apis: ['./src/routes/**/*.ts'],
 });
