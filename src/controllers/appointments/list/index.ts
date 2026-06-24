@@ -1,7 +1,7 @@
 import { type RequestHandler } from 'express';
 import { validation } from '../../../shared/middlewares/validation';
 import * as z from 'zod';
-import { appointmentsService } from '../../../shared/services';
+import { AppointmentsService } from '../../../shared/services';
 
 const querySchema = z.object({
   page: z.number().gt(0).optional(),
@@ -15,7 +15,7 @@ export const listValidation = validation({
 
 export const list: RequestHandler = async (_, res) => {
 
-  const appointmentsList = await appointmentsService.list(res.locals.userId);
+  const appointmentsList = await AppointmentsService.list(res.locals.userId);
 
   return res.status(200).json(appointmentsList);
 };  
