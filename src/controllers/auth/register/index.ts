@@ -28,6 +28,7 @@ export const register: RequestHandler<unknown, unknown, TUser> = async (req, res
     });
 
   } catch (error) {
+
     // Se for um erro não previsto lança erro 500
     if (!(error instanceof AppError)) return res.status(500).json({
       error: 'Internal Server Error'

@@ -4,7 +4,7 @@ import { auth } from '../../shared/middlewares/auth';
 
 const AppointmentsRouter = Router();
 
-AppointmentsRouter.use(auth);
+AppointmentsRouter.use('/appointments', auth);
 
 // Appointments CRUD
 AppointmentsRouter.post('/appointments', AppointmentsController.createValidation, AppointmentsController.create);

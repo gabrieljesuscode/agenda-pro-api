@@ -35,14 +35,7 @@ export const register = async (data: UserRegisterDTO) => {
 
   // Gera o hash da senha e se já existir lança um erro personalizado com status code
   const hash = await generateHash(data.password);
-
-  if (userRegistered) {
-    throw new AppError(
-      'Erro ao gerar hash',
-      500
-    );
-  }
-
+  
   // Cria o user sem erros
   return await prisma.user.create({
     data: {

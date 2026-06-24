@@ -5,7 +5,7 @@ import { DashboardController } from '../../controllers';
 
 const DashboardRouter = Router();
 
-DashboardRouter.use(auth);
+DashboardRouter.use('/dashboard', auth);
 
 // Dashboard 
 DashboardRouter.get('/dashboard', DashboardController.getSummary);

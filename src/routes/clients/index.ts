@@ -4,7 +4,7 @@ import { auth } from '../../shared/middlewares/auth';
 
 const ClientsRouter = Router();
 
-ClientsRouter.use(auth);
+ClientsRouter.use('/clients', auth);
 
 // Clients CRUD
 ClientsRouter.post('/clients', ClientsController.createValidation, ClientsController.create);
