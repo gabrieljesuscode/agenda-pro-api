@@ -8,7 +8,7 @@ export const swaggerSpec = swaggerJsdoc({
       version: '1.0.0',
     },
     components: {
-      securitySchemas: {
+      securitySchemes: {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
