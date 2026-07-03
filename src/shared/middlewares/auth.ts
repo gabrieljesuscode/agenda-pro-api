@@ -5,23 +5,24 @@ import { prisma } from '../../database/prisma/prisma';
 
 
 const verifyUserToken = async (token: string) => {
+  try {
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_SECRET || ''
+    ) as {
+      userId: string
+    };
 
-  const payload = jwt.verify(
-    token,
-    process.env.JWT_SECRET || ''
-  ) as {
-    userId: string
-  };
+    if (!payload.userId) return null;
 
-
-  if (!payload.userId) return null;
-
-  return await prisma.user.findUnique({
-    where: {
-      id: payload.userId
-    }
-  });
-
+    return await prisma.user.findUnique({
+      where: {
+        id: payload.userId
+      }
+    });
+  } catch {
+    return null;
+  }
 };
 
 export const auth: RequestHandler = async (req, res, next) => {
